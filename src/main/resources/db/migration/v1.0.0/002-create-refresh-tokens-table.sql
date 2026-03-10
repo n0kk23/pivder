@@ -5,7 +5,7 @@ CREATE TABLE IF NOT EXISTS refresh_tokens
 (
     id         UUID        PRIMARY KEY,
     account_id UUID        NOT NULL REFERENCES accounts (id),
-    token      TEXT        NOT NULL UNIQUE,
+    token_hash  TEXT        NOT NULL UNIQUE,
     is_active  BOOLEAN     NOT NULL DEFAULT TRUE,
     expires_at TIMESTAMPTZ NOT NULL,
     created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()

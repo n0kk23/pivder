@@ -14,7 +14,7 @@ class AccountEntity (
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "id", nullable = false)
-    val id: UUID? = null,
+    var id: UUID? = null,
 
     @field:Size(min = 6, max = 24)
     @field:NotBlank
@@ -27,9 +27,9 @@ class AccountEntity (
 
     @CreationTimestamp
     @Column(name = "created_at", nullable = false)
-    val createdAt: OffsetDateTime? = null,
+    var createdAt: OffsetDateTime? = null,
 
     @UpdateTimestamp
     @Column(name = "updated_at", nullable = false)
-    val updatedAt: OffsetDateTime? = null
+    var updatedAt: OffsetDateTime? = null
 )

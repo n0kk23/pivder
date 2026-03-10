@@ -1,4 +1,4 @@
-package ru.bonch.pivder.jwt
+package ru.bonch.pivder.app.jwt
 
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.BeforeEach
@@ -6,10 +6,8 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 import org.mockito.Mockito.mock
 import org.mockito.Mockito.`when`
-import ru.bonch.pivder.app.jwt.JwtProvider
 import ru.bonch.pivder.config.JwtConfiguration
-import java.util.Base64
-import java.util.UUID
+import java.util.*
 import javax.crypto.KeyGenerator
 
 class JwtProviderTest {

@@ -24,8 +24,8 @@ class RefreshTokenEntity(
     @JoinColumn(name = "account_id", nullable = false)
     var account: AccountEntity?,
 
-    @Column(name = "token", nullable = false, unique = true)
-    var token: String?,
+    @Column(name = "token_hash", nullable = false, unique = true)
+    var tokenHash: String?,
 
     @Column(name = "is_active", nullable = false)
     var isActive: Boolean?,

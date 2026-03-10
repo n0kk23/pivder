@@ -10,20 +10,18 @@ import ru.bonch.pivder.app.dto.response.TokenResponseDto
 import ru.bonch.pivder.app.entity.AccountEntity
 import ru.bonch.pivder.app.exception.conflict.impl.UsernameIsAlreadyTakenException
 import ru.bonch.pivder.app.exception.unauthorized.impl.BadCredentialsException
-import ru.bonch.pivder.app.jwt.JwtProvider
 import ru.bonch.pivder.app.mapper.AccountMapper
 import ru.bonch.pivder.app.repository.AccountRepository
-import ru.bonch.pivder.app.service.AccountService
-import ru.bonch.pivder.app.service.RefreshTokenService
+import ru.bonch.pivder.app.service.AuthService
+import ru.bonch.pivder.app.service.TokenService
 
 @Service
-class AccountServiceImpl(
+class AuthServiceImpl(
     private val accountRepository: AccountRepository,
     private val passwordEncoder: PasswordEncoder,
     private val accountMapper: AccountMapper,
-    private val refreshTokenService: RefreshTokenService,
-    private val jwtProvider: JwtProvider
-) : AccountService {
+    private val tokenService: TokenService,
+) : AuthService {
 
     @Transactional
     override fun registration(command: AccountRegistrationCommand): AccountResponseDto {
@@ -36,9 +34,9 @@ class AccountServiceImpl(
             hashPassword = passwordEncoder.encode(command.password),
         )
 
-        val saved = accountRepository.save(account)
+        val savedAccount = accountRepository.save(account)
 
-        return accountMapper.toResponse(saved)
+        return accountMapper.toResponse(savedAccount)
     }
 
     @Transactional
@@ -50,11 +48,9 @@ class AccountServiceImpl(
             throw BadCredentialsException("Wrong username or password")
         }
 
-        val accessToken = jwtProvider.generateAccessToken(account.id!!)
-        val refreshToken = refreshTokenService.generateRefreshToken(account)
+        val accessToken = tokenService.generateAccessToken(account)
+        val refreshToken = tokenService.generateRefreshToken(account)
 
         return TokenResponseDto(accessToken, refreshToken)
     }
-
-    // TODO make refresh token
 }
